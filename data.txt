@@ -1,0 +1,42 @@
+    uart0@101f0000 {    
+        compatible = "arm,pl011";    
+        reg = <0x101f0000 0x1000 >;    
+        interrupts = < 1 0 >;   
+	hflow = "unsupport"; 
+	status = "okay";
+    };    
+    uart1@101f2000 {    
+        compatible = "arm,pl011";    
+        reg = <0x101f2000 0x1000 >;    
+        interrupts = < 2 0 >;    
+	hflow = "unsupport"; 
+	status = "okay";
+    };
+    uart2@101f2000 {    
+        compatible = "arm,pl011";    
+        reg = <0x101f2000 0x1000 >;    
+        interrupts = < 2 0 >;    
+	hflow = "unsupport"; 
+	status = "disable";
+    };
+    uart3@101f2000 {    
+        compatible = "arm,pl011";    
+        reg = <0x101f2000 0x1000 >;    
+        interrupts = < 2 0 >;    
+	hflow = "unsupport"; 
+	status = "disable";
+    };
+    uart4@101f2000 {    
+        compatible = "arm,pl011";    
+        reg = <0x101f2000 0x1000 >;    
+        interrupts = < 2 0 >;    
+	hflow = "support"; 
+	status = "okay";
+    };
+    uart5@101f2000 {    
+        compatible = "arm,pl011";    
+        reg = <0x101f2000 0x1000 >;    
+        interrupts = < 2 0 >;    
+	hflow = "unsupport"; 
+	status = "disable";
+    };
