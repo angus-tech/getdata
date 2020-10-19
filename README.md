@@ -1,2 +1,2 @@
 # getdata
-search data from dts.txt
+search data from vedio web
