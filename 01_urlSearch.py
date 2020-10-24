@@ -16,15 +16,17 @@ class Logger(object):
     def flush(self):
         pass
 
-sys.stdout = Logger("test.txt")
+sys.stdout = Logger("02_urlBuffer.txt")
 
-print('Enter your URL:')
+print('Enter your vedio weblink:')
 url = raw_input()
 compare = re.compile('https://v.qq.com/x/cover/'+r'(\w+?)'+'/'+r'(\w+?)'+'.html')
 menu = compare.findall(url)
 if menu != []:
     html = urllib2.urlopen(url).read()
-    
+    print('begin source code')
+    print(html)  
+    print('end source code')
     compare = re.compile('x/cover/'+menu[0][0]+'/'+r'(\w+?)'+'.html')
     org_result = compare.findall(html)
     if org_result != []:
@@ -33,8 +35,9 @@ if menu != []:
         length = len(result)
         for i in range(0, length): 
             print('URL-%d: https://v.qq.com/x/cover/%s/%s.html'%(i+1, menu[0][0], result[i]))
+    print('Finish search!')
 else:
-    print('Invalid URL.')
+    print('Invalid URL!')
 
 
 
