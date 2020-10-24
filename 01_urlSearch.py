@@ -16,30 +16,25 @@ class Logger(object):
     def flush(self):
         pass
 
-sys.stdout = Logger("02_urlBuffer.txt")                             #将终端打印信息缓存到该文件中
+sys.stdout = Logger("02_urlBuffer.txt")                                         #将终端打印信息缓存到该文件中
 
 print('Enter your vedio weblink:')
-url = raw_input()
-# "data":{},"firstClipListVid":"x3021vdyca7"}
-# var LIST_INFO = {"vid":["e00327xsru8","o0032y6w6pz","l0032vjulbs","t0032m0ciip","j0032p20tyv","x3021vdyca7","f302135mqwe","d30209hx5fi","z0032pcbqld:
-compare = re.compile('https://v.qq.com/x/cover/'+r'(\w+?)'+'/'+r'(\w+?)'+'.html')
-menu = compare.findall(url)
+set_url = raw_input()
+compare = re.compile('.*?'+'x/cover/'+r'(\w+?)'+'/'+r'(\w+?)'+'.html')          #根据输入网址检索关键字
+menu = compare.findall(set_url)
 if menu != []:
-    html = urllib2.urlopen(url).read()                               #读取网站源码
-    # print('begin source code')
-    # print(html)
-    # print('end source code')
-    compare = re.compile('x/cover/'+menu[0][0]+'/'+r'(\w+?)'+'.html')#设定正则条件，获取视频编码
-    org_result = compare.findall(html)                               #根据正则条件遍历符合条件视频编码
-    if org_result != []:
-        result = list(set(org_result))                               #列表元素去重
-        result.sort(key=org_result.index)                            #根据原列表重新排列
-        length = len(result)                                         #获取最新列表长度
-        for i in range(0, length): 
-            print('URL-%d: https://v.qq.com/x/cover/%s/%s.html'%(i+1, menu[0][0], result[i]))
+    org_url = ('https://v.qq.com/x/cover/%s/%s.html'%(menu[0][0], menu[0][1]))  #组装链接进行网站访问
+    html = urllib2.urlopen(org_url).read()                                      #读取网站源码
+    compare = re.compile('LIST_INFO = {"vid":\['+r'(.*?)'+r'],'+'.*?'+'"firstClipListVid":"'+r'(.*?)'+'"}')#读取list info数据
+    list_all = compare.findall(html)
+    compare = re.compile('"'+r'(.*?)'+'"')                                      #提取有效视频编号
+    list_cod = compare.findall(list_all[0][0])
+    length = len(list_cod)
+    for i in range(0, length):
+        if list_cod[i] != list_all[0][1]:                                       #排除干扰视频源
+            print('URL-%d: https://v.qq.com/x/cover/%s/%s.html'%(i+1, menu[0][0], list_cod[i]))
+        else:
+            break
     print('Finish search!')
 else:
     print('Invalid URL!')
-
-
-
